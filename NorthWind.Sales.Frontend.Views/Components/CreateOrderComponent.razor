@@ -32,10 +32,10 @@
     </div>
 
     <div class="form-group">
-        <label for="shipContry">
+        <label for="shipCountry">
             @CreateOrderMessages.ShipCountryLabel
         </label>
-        <InputText class="form-control" id="shipCountryLabel"
+        <InputText class="form-control" id="shipCountry"
                    placeholder="@CreateOrderMessages.ShipCountryLabel"
         @bind-Value=Order.ShipCountry />
         <ValidationMessage For="()=>Order.ShipCountry" />
