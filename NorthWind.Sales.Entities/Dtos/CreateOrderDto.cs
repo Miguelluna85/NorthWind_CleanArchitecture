@@ -2,6 +2,7 @@
 {
     public class CreateOrderDto
     {
+
         public string CustomerId { get; }
         public string ShipAddress { get; }
         public string ShipCity { get; }
