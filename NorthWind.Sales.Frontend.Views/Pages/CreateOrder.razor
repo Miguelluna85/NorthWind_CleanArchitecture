@@ -1,0 +1,16 @@
+﻿@page "/createorder"
+
+<ErrorBoundary @ref=ErrorBoundaryRef>
+    <ChildContent>
+        <CreateOrderComponent Order="viewModel"/>
+    </ChildContent>
+    <ErrorContent>
+        <ExceptionComponent Exception="context"/>
+        <button class="btn btn-danger" @onclick=Recover>
+            @CommonMessages.Ok
+        </button>
+    </ErrorContent>
+</ErrorBoundary>
+
+
+
