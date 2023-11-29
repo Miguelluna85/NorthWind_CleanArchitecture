@@ -63,7 +63,7 @@ internal class ExceptionHandlerOrchestrator
         if (Exception != null)
         {
             var ProblemDetail = TOProblemDetail(Exception);
-            context.Response.ContentType = "appication/problem+json";
+            context.Response.ContentType = "application/problem+json";
             context.Response.StatusCode = ProblemDetail.Status.Value;
 
             var Stream = context.Response.Body;
