@@ -2,12 +2,14 @@
 public static class DependencyContainer
 {
     public static IServiceCollection AddWebApiGateways
-        ( this IServiceCollection services,
+        (this IServiceCollection services,
         Action<HttpClient> configureClient)
     {
+        services.TryAddTransient<ExceptionDelegatingHandler>();
 
         services.AddHttpClient<ICreateOrderGateway,
-            CreateOrderGateway>(configureClient);
+            CreateOrderGateway>(configureClient)
+            .AddHttpMessageHandler<ExceptionDelegatingHandler>();
 
         return services;
     }
