@@ -20,7 +20,8 @@ public class ModelValidator<T> : ComponentBase
 
         do
         {
-            SeparatorIndex = PropertyPath.IndexOfAny(PropertyNameSeparators);
+            SeparatorIndex = 
+                PropertyPath.IndexOfAny(PropertyNameSeparators);
 
             if (SeparatorIndex >= 0)
             {
@@ -63,7 +64,7 @@ public class ModelValidator<T> : ComponentBase
         ValidationMessageStore.Clear();
         bool IsValid = await Validator.Validate((T)EditContext.Model);
 
-        if (IsValid)
+        if (!IsValid)
         {
             foreach (var Error in Validator.Errors)
             {

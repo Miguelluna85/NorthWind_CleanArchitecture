@@ -45,7 +45,7 @@
         <label for="shipPostalCode">
             @CreateOrderMessages.ShipPostalCodeLabel
         </label>
-        <InputText class="form-control" id="shipPostalCodeLabel"
+        <InputText class="form-control" id="shipPostalCode"
                    placeholder="@CreateOrderMessages.ShipPostalCodeLabel"
         @bind-Value=Order.ShipPostalCode/>
         <ValidationMessage For="()=>Order.ShipPostalCode" />
@@ -72,17 +72,17 @@
         <div class="row">
             <div class="col">
                 <InputNumber class="form-control"
-                @bind-Value="Item.ProductId"/>
+                @bind-Value=Item.ProductId/>
                 <ValidationMessage For="()=>Item.ProductId" />
             </div>
             <div class="col">
                 <InputNumber class="form-control"
-                @bind-Value="Item.UnitPrice"/>
+                @bind-Value=Item.UnitPrice/>
                 <ValidationMessage For="()=>Item.UnitPrice" />
             </div>
             <div class="col">
                 <InputNumber class="form-control"
-                @bind-Value="Item.Quantity"/>
+                @bind-Value=Item.Quantity/>
                 <ValidationMessage For="()=>Item.Quantity" />
             </div>
         </div>
