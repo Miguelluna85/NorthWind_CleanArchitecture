@@ -7,3 +7,6 @@ global using NorthWind.Sales.Backend.Presenters.ExceptionHandlers.Resources;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.DependencyInjection;
+global using NorthWind.Sales.Backend.Presenters.ExceptionHandlers;
+global using Microsoft.AspNetCore.Diagnostics;
+global using System.Text.Json;

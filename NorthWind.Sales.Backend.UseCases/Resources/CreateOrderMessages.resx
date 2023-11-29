@@ -121,7 +121,7 @@
     <value>El identificador del cliente proporcionado no existe.</value>
   </data>
   <data name="CustomerWhitBalanceErrorTemplate" xml:space="preserve">
-    <value>El cliente{0} tiene un adeudo pendiente de {1}.</value>
+    <value>El cliente {0} tiene un adeudo pendiente de {1}.</value>
   </data>
   <data name="ProductIdNotFoundErrorTemplate" xml:space="preserve">
     <value>El producto {0} no existe. </value>

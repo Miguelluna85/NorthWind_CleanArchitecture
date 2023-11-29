@@ -70,7 +70,7 @@ namespace NorthWind.Sales.Backend.UseCases.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to El cliente{0} tiene un adeudo pendiente de {1}..
+        ///   Looks up a localized string similar to El cliente {0} tiene un adeudo pendiente de {1}..
         /// </summary>
         internal static string CustomerWhitBalanceErrorTemplate {
             get {

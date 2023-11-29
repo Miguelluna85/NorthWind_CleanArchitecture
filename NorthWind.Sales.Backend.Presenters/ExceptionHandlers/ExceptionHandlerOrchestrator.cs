@@ -3,6 +3,7 @@ internal class ExceptionHandlerOrchestrator
 {
     readonly Dictionary<Type, object> Handlers;
     readonly ILogger<ExceptionHandlerOrchestrator> Logger;
+
     public ExceptionHandlerOrchestrator(
        [FromKeyedServices(typeof(IExceptionHandler<>))]
         IEnumerable<object> handlers,
@@ -24,7 +25,50 @@ internal class ExceptionHandlerOrchestrator
     }
 
 
-    //TODO: Implementar
+    ProblemDetails TOProblemDetail(Exception exception)
+    {
+        ProblemDetails Details;
+        if (Handlers.TryGetValue(exception.GetType(),
+            out object Handler))
+        {
+            Type HandlerType = Handler.GetType();
+            Details = (ProblemDetails)HandlerType
+                .GetMethod(
+                nameof(IExceptionHandler<Exception>.Handle))
+                .Invoke(Handler, new object[] { exception });
+        }
+        else
+        {
+            Details = new ProblemDetails();
+            Details.Status = StatusCodes.Status500InternalServerError;
+            Details.Type =
+                "https://datatracker.ietf.org/doc/html/rfc7231#sectiob-6.6.1";
+            Details.Title = ExceptionMessages.UnhandledExceptionTitle;
+            Details.Detail = ExceptionMessages.UnhandledExceptionDetail;
+            Details.Instance =
+                $"{nameof(ProblemDetails)}/{exception.GetType()}";
 
+            Logger.LogError(exception,
+                ExceptionMessages.UnhandledExceptionTitle);
+        }
+        return Details;
+    }
 
+    public async Task HandleException(HttpContext context)
+    {
+        IExceptionHandlerFeature ExceptionDetail =
+            context.Features.Get<IExceptionHandlerFeature>();
+        Exception Exception = ExceptionDetail.Error;
+
+        if (Exception != null)
+        {
+            var ProblemDetail = TOProblemDetail(Exception);
+            context.Response.ContentType = "appication/problem+json";
+            context.Response.StatusCode = ProblemDetail.Status.Value;
+
+            var Stream = context.Response.Body;
+            await JsonSerializer.SerializeAsync(Stream, ProblemDetail);
+        }
+
+    }
 }

@@ -1,6 +1,4 @@
-﻿using NorthWind.Sales.Backend.IoC;
-
-namespace NorthWind.Sales.WebApi;
+﻿namespace NorthWind.Sales.WebApi;
 public static class Startup
 {
     public static WebApplication CreateWebApplication(this WebApplicationBuilder builder)
@@ -27,6 +25,8 @@ public static class Startup
 
     public static WebApplication ConfigureWebApplication(this WebApplication app)
     {
+        app.UseCustomExceptionHandlers();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

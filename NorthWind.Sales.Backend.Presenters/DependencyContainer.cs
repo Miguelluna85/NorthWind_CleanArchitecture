@@ -1,4 +1,4 @@
-﻿using NorthWind.Sales.Backend.Presenters.ExceptionHandlers;
+﻿using Microsoft.AspNetCore.Builder;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -13,11 +13,24 @@ public static class DependencyContainer
                 ValidationExceptionHandler>(typeof(IExceptionHandler<>));
 
         services.AddKeyedSingleton<object,
-        UnitOfWorkException>(typeof(IExceptionHandler<>));
+        UnitOfWorkExceptionHandler>(typeof(IExceptionHandler<>));
 
         services.AddSingleton<ExceptionHandlerOrchestrator>();
 
         return services;
+    }
+
+    public static WebApplication UseCustomExceptionHandlers(
+         this WebApplication app)
+    {
+        var Orchertrator = app.Services
+            .GetRequiredService<ExceptionHandlerOrchestrator>();
+
+        app.UseExceptionHandler(builder =>
+            builder.Run(Orchertrator.HandleException));
+
+
+        return app;
     }
 
 }

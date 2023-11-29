@@ -49,6 +49,7 @@ internal class CreateOrderInteractor : ICreateOrderInputPort
 
         OrderAggregate Order = OrderAggregate.From(orderDto);
 
+        //Order.CustomerId = "";
         await Repository.CreateOrder(Order);
         await Repository.SaveChanged();
         await OutPutPort.Handle(Order);
