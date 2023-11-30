@@ -15,22 +15,26 @@ public static class DependencyContainer
         services.AddKeyedSingleton<object,
         UnitOfWorkExceptionHandler>(typeof(IExceptionHandler<>));
 
-        services.AddSingleton<ExceptionHandlerOrchestrator>();
+        services.AddExceptionHandler<ExceptionHandlerOrchestrator>();
+        services.AddExceptionHandler<UnhandledExceptionHandler>();  
 
         return services;
     }
 
-    public static WebApplication UseCustomExceptionHandlers(
-         this WebApplication app)
-    {
-        var Orchertrator = app.Services
-            .GetRequiredService<ExceptionHandlerOrchestrator>();
+    //public static WebApplication UseCustomExceptionHandlers(
+    //     this WebApplication app)
+    //{
+    //    //var Orchertrator = app.Services
+    //    //    .GetRequiredService<ExceptionHandlerOrchestrator>();
 
-        app.UseExceptionHandler(builder =>
-            builder.Run(Orchertrator.HandleException));
+    //    //app.UseExceptionHandler(builder =>
+    //    //    builder.Run(Orchertrator.HandleException));
+
+    //    app.UseExceptionHandler(builder =>
+    //        { });
 
 
-        return app;
-    }
+    //    return app;
+    //}
 
 }

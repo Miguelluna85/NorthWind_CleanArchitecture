@@ -10,3 +10,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using NorthWind.Sales.Backend.Presenters.ExceptionHandlers;
 global using Microsoft.AspNetCore.Diagnostics;
 global using System.Text.Json;
+global using NorthWind.Sales.Backend.Presenters.Extensions;

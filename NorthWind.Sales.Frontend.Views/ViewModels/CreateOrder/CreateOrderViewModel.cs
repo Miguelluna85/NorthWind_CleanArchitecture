@@ -1,4 +1,8 @@
-﻿namespace NorthWind.Sales.Frontend.Views.ViewModels.CreateOrder;
+﻿
+
+using NorthWind.Sales.Frontend.Views.Components;
+
+namespace NorthWind.Sales.Frontend.Views.ViewModels.CreateOrder;
 public class CreateOrderViewModel
 {
     readonly ICreateOrderGateway Gateway;
@@ -15,6 +19,7 @@ public class CreateOrderViewModel
     { get; set; } = new();
 
     public IModelValidator<CreateOrderViewModel> Validator { get; set; }
+    public ModelValidator<CreateOrderViewModel> ModelValidator { get; set; }    
 
     public string InformationMessage { get; private set; }
     public void AddNewOrderDetailItem()
@@ -25,11 +30,30 @@ public class CreateOrderViewModel
     public async Task Send()
     {
         InformationMessage = string.Empty;
-        var OrderId = await Gateway.CreateOrderAsync(
-            (CreateOrderDto)this);
 
-        InformationMessage = string.Format(
-            CreateOrderMessages.CreatedOrderTemplate, OrderId);
+        try
+        {
+            var OrderId = await Gateway.CreateOrderAsync(
+                (CreateOrderDto)this);
+
+            InformationMessage = string.Format(
+                CreateOrderMessages.CreatedOrderTemplate, OrderId);
+        }
+        catch (HttpRequestException ex)
+        {
+            if (ex.Data.Contains("Errors"))
+            {
+                IEnumerable<ValidationError> Errors =
+                    ex.Data["Errors"] as IEnumerable<ValidationError>;
+                ModelValidator.AddErrors(Errors);
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+
     }
 
     public static explicit operator CreateOrderDto(

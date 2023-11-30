@@ -7,7 +7,6 @@ internal class ExceptionDelegatingHandler : DelegatingHandler
     {
         var Response = await base.SendAsync(request, cancellationToken);
 
-
         if (!Response.IsSuccessStatusCode)
         {
             string ErrorMessage = await Response.Content.ReadAsStringAsync();

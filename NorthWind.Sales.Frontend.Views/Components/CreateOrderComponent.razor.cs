@@ -1,6 +1,4 @@
-﻿using NorthWind.Sales.Frontend.Views.ViewModels.CreateOrder;
-
-namespace NorthWind.Sales.Frontend.Views.Components;
+﻿namespace NorthWind.Sales.Frontend.Views.Components;
 
 public partial class CreateOrderComponent
 {
