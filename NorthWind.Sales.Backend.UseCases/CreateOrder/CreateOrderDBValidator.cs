@@ -51,15 +51,29 @@ internal class CreateOrderDBValidator :
         {
             if (!Item.InStock.HasValue)
             {
+                CreateOrderDetailDto OrderDetail =
+                    model.OrderDetails
+                    .First(i => i.ProductId == Item.ProductId);
+                var Index = model.OrderDetails.ToList().IndexOf(OrderDetail);
+                string PropertyName =
+                    $"{nameof(model.OrderDetails)}[{Index}].{nameof(OrderDetail.ProductId)}";
+
                 ErrorsField.Add(new ValidationError(
-                    nameof(Item.ProductId),
+                    PropertyName,
                     string.Format(CreateOrderMessages.ProductIdNotFoundErrorTemplate,
                    Item.ProductId)));
             }
             else if (Item.InStock < Item.Required)
             {
+                CreateOrderDetailDto OrderDetail =
+                   model.OrderDetails
+                   .Last(i => i.ProductId == Item.ProductId);
+                var Index = model.OrderDetails.ToList().IndexOf(OrderDetail);
+                string PropertyName =
+                    $"{nameof(model.OrderDetails)}[{Index}].{nameof(OrderDetail.Quantity)}";
+
                 ErrorsField.Add(new ValidationError(
-                nameof(Item.ProductId),
+                PropertyName,
                 string.Format(
                     CreateOrderMessages
                     .UnitInStockLessThanQuantityErrorTemplate,
